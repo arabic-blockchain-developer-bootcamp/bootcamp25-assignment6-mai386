@@ -32,21 +32,21 @@ contract Assignment6 {
     // - Take one parameter: `amount`
     // - Use the `hasEnoughBalance` modifier
     // - Emit the `FundsWithdrawn` event
-    function withdraw() {
+    function withdraw(uint amount) external hasEnoughBalance(amount){
         // decrement user balance from balances mapping 
-
+        balances[msg.sender] -= amount;
         // send tokens to the caller
-
+        payable (msg.sender).transfer(amount);
         // emit suitable event
-
+        emit FundsWithdrawn(msg.sender, amount);
     }
 
     // Function to check the contract balance
     // This function should:
     // - Be public and view
     // - Return the contract's balance
-    function getContractBalance() {
+    function getContractBalance() public view returns (uint contractbalance) {
         // return the balance of the contract
-
+        return address(this).balance;
     }
 }
